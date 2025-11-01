@@ -10,7 +10,7 @@ export default function Layout({
     <main className="font-sans bg-linear-to-b from-[#1DA1F2] via-[#0A66C2] to-[#E1306C]">
         <header className="header">
           DP M<span className="animate-a">a</span>ker 
-          <img src={'/capture.svg'} alt="capture" className="absolute capture-animate left-[75px] top-[17px] w-[30px] h-[32px]" />
+          <img src={'/capture.svg'} alt="capture" className="absolute capture-animate left-[74px] top-[17px] w-[30px] h-[32px]" />
 
           <span className='ml-3 float-right'>
             <Link href='https://buymeacoffee.com/shik4005m'>
