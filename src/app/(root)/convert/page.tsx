@@ -1,5 +1,4 @@
 import ColorPallete from "@/components/ColorPalette";
-import Image from "next/image";
 
 const getStatus = (progress: number) => {
   if (progress === 100) return "Completed!";
@@ -9,8 +8,8 @@ const getStatus = (progress: number) => {
   return "Enhancing...";
 }
 
-export default function Convert(props: { progress: number; resetState: () => void; showProgress: boolean; imgUpdated: string; dimensions: { width: number; height: number } }) {
-  const { progress, resetState, showProgress, imgUpdated, dimensions } = props;
+export default function Convert(props: { progress: number; resetState: () => void; imgUpdated: string; dimensions: { width: number; height: number } }) {
+  const { progress, resetState, imgUpdated, dimensions } = props;
 
   return (
     <>

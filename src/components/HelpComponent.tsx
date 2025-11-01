@@ -37,13 +37,13 @@ export default function HelpComponent() {
                         <li><strong>Upload an Image:</strong> Click on the upload area to select an image from your device or drag and drop an image file.</li>
                     </ol>
                     <ol start={2} className="list-decimal list-inside mb-4 space-y-2">
-                        <li><strong>Remove Background:</strong> After uploading, click the "Convert" button to remove the background from your image.</li>
+                        <li><strong>Remove Background:</strong> After uploading, click the Convert button to remove the background from your image.</li>
                     </ol>
                     <ol start={3} className="list-decimal list-inside mb-4 space-y-2">
                         <li><strong>Customize Background:</strong> Choose a preset background color, pick a custom color using the color picker, or upload your own background image.</li>
                     </ol>
                     <ol start={4} className="list-decimal list-inside mb-4 space-y-2">
-                        <li><strong>Download Your Image:</strong> Once you're satisfied with your edits, click the "Download" button to save your new profile picture.</li>
+                        <li><strong>Download Your Image:</strong> Once you are satisfied with your edits, click the Download button to save your new profile picture.</li>
                     </ol>
                     <div className="flex justify-end">
                         <button

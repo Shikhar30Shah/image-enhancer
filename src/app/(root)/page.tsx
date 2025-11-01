@@ -1,6 +1,4 @@
-import ColorPallete from "@/components/ColorPalette";
 import ImageInput from "@/components/ImageInput";
-import { FacebookIcon, Instagram, InstagramIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } from "lucide-react";
 
 export default function Home() {
 

@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { removeBackground } from "@imgly/background-removal";
-import Image from "next/image";
-import { CheckCheckIcon, CheckCircleIcon, CrossIcon, DeleteIcon, FileIcon, ImageIcon, RemoveFormattingIcon, Route, UploadCloudIcon, XIcon } from "lucide-react";
+import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Convert from "@/app/(root)/convert/page";
 
@@ -12,9 +10,7 @@ type dimensions = {
     height: number
 }
 const ImageInput = () => {
-  const router = useRouter();
   const [file, setFile] = useState<File | null>();
-  const [imgSrc, setImgSrc] = useState<string | ArrayBuffer>("");
   const [imgUpdated, setImgUpdated] = useState<string>("");
   const [dimensions, setDimensions] = useState<dimensions>({} as dimensions);
   const [progress, setProgress] = useState<number>(0);
@@ -33,7 +29,6 @@ const ImageInput = () => {
         img.src = fr.result as string;
       }
       fr.readAsDataURL(file);
-      fr.onloadend = () => fr.result && setImgSrc(fr.result);
     }
   }, [file]);
 
@@ -85,7 +80,6 @@ const ImageInput = () => {
   const resetState = () => {
     setConvert(false);
     setFile(null);
-    setImgSrc("");
     setImgUpdated("");
     setDimensions({} as dimensions);
     setProgress(0);
@@ -94,7 +88,6 @@ const ImageInput = () => {
 
   const handleRemoveFile = () => {
     setFile(null);
-    setImgSrc("");
     setDimensions({} as dimensions);
     setProgress(0);
     setShowProgress(false);
@@ -127,7 +120,7 @@ const ImageInput = () => {
 
       <button className="m-4 bg-blue-500 text-white shadow-lg border-2 border-white rounded hover:bg-blue-600" onClick={handleSubmit}>Convert</button>
     </> : <>
-        <Convert progress={progress} resetState={resetState} showProgress={showProgress} imgUpdated={imgUpdated} dimensions={dimensions} />
+        <Convert progress={progress} resetState={resetState} imgUpdated={imgUpdated} dimensions={dimensions} />
     </>
   );
 };
