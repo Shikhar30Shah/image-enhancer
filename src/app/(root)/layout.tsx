@@ -12,7 +12,7 @@ export default function Layout({
           DP M<span className="animate-a">a</span>ker 
           <img src={'/capture.svg'} alt="capture" className="absolute capture-animate left-[75px] top-[17px] w-[30px] h-[32px]" />
 
-          <span className='ml-2 float-right'>
+          <span className='ml-3 float-right'>
             <Link href='https://buymeacoffee.com/shik4005m'>
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="28" viewBox="0 0 884 1279" fill="none">
                 <path d="M791.109 297.518L790.231 297.002L788.201 296.383C789.018 297.072 790.04 297.472 791.109 297.518V297.518Z" fill="#ffffff"/>

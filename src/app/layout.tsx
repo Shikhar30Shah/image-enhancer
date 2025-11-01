@@ -15,6 +15,12 @@ const bitcountPropSingle = Bitcount_Prop_Single({
 export const metadata: Metadata = {
   title: "DP Maker",
   description: "Tool to create display pictures for social media platforms.",
+  icons: {
+    icon: [{
+      href: "/dp-logo.png",
+      url: "/dp-logo.png",
+    }]
+  },
 };
 
 export default function RootLayout({

@@ -9,8 +9,11 @@ export default function HelpComponent() {
 
     useEffect(() => {
         if(document.cookie.indexOf('helpOpened=true')===-1) {
-            setOpen(true);
-            document.cookie = "helpOpened=true; max-age=31536000; path=/";
+            const timer = setTimeout(() => {
+                setOpen(true);
+                document.cookie = "helpOpened=true; max-age=31536000; path=/";
+            }, 5000);
+            return () => clearTimeout(timer);
         }
     }, []);
 
