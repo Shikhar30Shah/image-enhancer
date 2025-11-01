@@ -8,8 +8,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-raleway);
+  --font-prop: var(--font-bitcount-prop-single);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +23,143 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .file-input {
+    @apply h-40 w-[90%] sm:w-1/2 md:w-[45%] lg:w-1/3 ml-auto mr-auto bg-linear-to-b from-[#1DA1F2] to-[#1DA1F7F] relative text-white flex flex-col items-center justify-center m-3 p-5 border-3 border-dashed border-gray-300 rounded-lg z-1000000;
+  }
+
+  .header {
+    /* darker gradient for contrast, keep text white */
+    @apply w-full p-4 text-2xl text-white bg-gradient-to-r from-[#1266DD] via-[#0A315E] to-[#4A0B48] font-bold items-center overflow-hidden shadow-md shadow-white/50;
+  }
+
+  .footer {
+    @apply text-center p-2 text-white;
+  }
+
+  /* .header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.18);
+    pointer-events: none;
+  } */
+  
+  button {
+    @apply p-2 pr-4 pl-4 cursor-pointer transition-transform duration-500 scale-100 active:scale-90;
+  }
+
+  .bottom-left-arrow::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    transform: rotate(180deg);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #808080; /* Arrow color */
+    bottom: -10px;
+    left: 10px; /* Adjust position from left */
+  }
+
+  .home-animate {
+
+  }
+
+  @keyframes space-a {
+    0% {
+      padding: 0px;
+    }
+    100% {
+      padding: 8px;
+    }
+  }
+
+  .animate-a {
+    animation-name: space-a;
+    animation-duration: 1.5s;
+    animation-delay: 3.5s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+    /* @apply animate-[space-a] delay-[3500ms] duration-[1500ms] ease-in; */
+  }
+
+  .icon-animate {
+    @apply transform transition-transform duration-300 hover:scale-110;
+  }
+
+  @keyframes slide-down-scale {
+    0% {
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%) translateY(5px) scale(1);
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    10% {
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%) translateY(5px) scale(1);
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    20% {
+      top: 150px;
+      left: 50%;
+      transform: translateX(-50%) translateY(150px) scale(1);
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    50% {
+      top: 135px;
+      left: 50%;
+      transform: translateX(-50%) translateY(0) scale(1.5);
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    55% {
+      top: 135px;
+      left: 50%;
+      transform: translateX(-50%) translateY(0) scale(1);
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0.8);
+    }
+    58% {
+      top: 135px;
+      left: 50%;
+      transform: translateX(-50%) translateY(0) scale(1.5);
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0.8);
+    }
+    60% {
+      top: 135px;
+      left: 50%;
+      transform: translateX(-50%) translateY(0) scale(1);
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0.8);
+    }
+    100% {
+      top: 17px;
+      left: 75px;
+      transform: translateX(0) translateY(0) scale(1);
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+  }
+
+  .capture-animate {
+    /* animation-name: slide-down-scale;
+    animation-duration: 5s;
+    z-index: 100000; */
+    @apply animate-[slide-down-scale_5s_forwards] z-[10000000]
+  }
+
+  .help-icon {
+    @apply stroke-white cursor-pointer hover:stroke-gray-300 w-8 h-8
+  }
+
+  .dialog {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 500ms ease-out, visibility 500ms;
+    /* @apply opacity-0 invisible transition-opacity duration-500 ease-in; */
+  }
+
+  .dialog-open {
+    @apply opacity-100 visible transition-opacity duration-500 ease-out;
+  }
 }
