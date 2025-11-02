@@ -95,7 +95,7 @@ const ImageInput = () => {
 
   return (
     !convert ? <>
-      <p className="text-center">Easily create stunning profile pictures with our background removal tool. </p>
+      <p className="text-center mt-15 xs:mt-10 sm:mt-10 md:mt-20">Easily create stunning profile pictures with our background removal tool. </p>
       <p className="text-center mb-6">
         Customize background with our color palette or upload your own background image.</p>
       <div className="file-input">

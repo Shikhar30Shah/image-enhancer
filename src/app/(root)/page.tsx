@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className="font-sans text-white">
       <h1 className=" text-2xl xs:text-2xl sm:text-3xl md:text-4xl text-center font-bold m-4 mt-6">Welcome to DP Maker</h1>
-      <div className="min-h-screen text-center mt-15 xs:mt-10 sm:mt-10 md:mt-20 py-2 px-3 text-white overflow-hidden">
+      <div className="min-h-screen text-center py-2 px-3 text-white overflow-hidden">
         {/* <div className="home-animate mb-4 opacity-0.5 absolute transform top-[15%] left-[15%] opacity-50 hover: rotate-12 transition-transform duration-500">
           <InstagramIcon className="icon-animate" color="#E1306C" width={128} height={128} />
         </div>

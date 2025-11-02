@@ -1,4 +1,5 @@
 import ColorPallete from "@/components/ColorPalette";
+import Image from "next/image";
 
 const getStatus = (progress: number) => {
   if (progress === 100) return "Completed!";
@@ -15,8 +16,8 @@ export default function Convert(props: { progress: number; resetState: () => voi
     <>
       <div className="flex flex-col items-center justify-center py-2">
         <h1 className="text-2xl font-bold mb-4">{getStatus(progress)}</h1>
-          <div className="flex items-center">
-            <progress value={progress} max={100} className="m-2 w-full sm:w-90 h-4 [&::-webkit-progress-bar]:rounded-lg [&::-webkit-progress-value]:rounded-lg [&::-webkit-progress-bar]:bg-slate-300 [&::-webkit-progress-value]:bg-green-400 [&::-moz-progress-bar]:bg-green-400 transition-width-duration-500 ease-in-out" /><span>{progress}%</span>
+          <div className="flex items-center justify-center w-[80%]">
+            <progress value={progress} max={100} className="m-2 h-4 w-[80%] sm:w-90 [&::-webkit-progress-bar]:rounded-lg [&::-webkit-progress-value]:rounded-lg [&::-webkit-progress-bar]:bg-slate-300 [&::-webkit-progress-value]:bg-green-400 [&::-moz-progress-bar]:bg-green-400 transition-width-duration-500 ease-in-out" /><span>{progress}%</span>
           </div>
       </div>
 

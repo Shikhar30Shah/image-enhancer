@@ -2,16 +2,19 @@
 
 import { Pipette, XIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function ColorPallete(props: { dimensions: { width: number; height: number }; imgUpdated: string; resetState: () => void }) {
   const { dimensions, imgUpdated, resetState } = props;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [colorPicker, setColorPicker] = useState<string>('#ffbf00');
+  const [colorPicker, setColorPicker] = useState<string>('');
 
   const [customColor, setCustomColor] = useState<string>('#000000');
   const [bgFile, setBGFile] = useState<string | ArrayBuffer | null>(null);
+
+  const [seen, setSeen] = useState<boolean>(false);
 
   const [rounded, setRounded] = useState<boolean>(false);
 
@@ -34,7 +37,13 @@ export default function ColorPallete(props: { dimensions: { width: number; heigh
       canvas.width = Math.floor(dimensions.width);
       canvas.height = Math.floor(dimensions.height);
 
-      if (bgFile) {
+      if(!colorPicker) {
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        return;
+      }
+
+      else if (bgFile) {
         const bgImg = new window.Image();
         bgImg.crossOrigin = "anonymous";
         bgImg.src = bgFile as string;
@@ -96,6 +105,8 @@ export default function ColorPallete(props: { dimensions: { width: number; heigh
     link.download = 'enhanced-image.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
+    setSeen(true);
+    setTimeout(() => setSeen(false), 5000);
   }
 
   const handleRemoveBg = () => {
@@ -103,8 +114,33 @@ export default function ColorPallete(props: { dimensions: { width: number; heigh
   }
 
   return (
-    <>
-      <div className='grid grid-cols-12 gap-4 justify-center m-4'>
+    <>      
+      {imgUpdated.length > 0 && <>
+        <input type='radio' className='m-2 mt-1 w-4 h-4 sm:w-6 sm:h-6 cursor-pointer align-middle' checked={!rounded} onChange={() => setRounded(false)} />Original
+        <input type='radio' className='m-2 mt-1 w-4 h-4 sm:w-6 sm:h-6 cursor-pointer align-middle' checked={rounded} onChange={() => setRounded(true)} />Rounded
+        {bgFile ? <div className='relative mt-4 max-h-[250px] max-w-[250px] sm:max-h-[400px] sm:max-w-[400px]' style={{width: dimensions.width/3, height: rounded ? dimensions.width/3 : dimensions.height/3, margin: '8px auto'}} >
+          <Image
+            src={imgUpdated}
+            alt="the image after conversion"
+            fill
+            style={{ backgroundImage: `url(${bgFile})`, objectFit: 'cover', borderRadius: rounded ? '50%' : '0' }}
+          />
+        </div> : <div className="relative mt-4 max-h-[250px] max-w-[250px] sm:max-h-[400px] sm:max-w-[400px]" style={{width: dimensions.width/2, height: rounded ? dimensions.width/2 : dimensions.height/2, margin: '8px auto'}}  >
+          <Image
+            src={imgUpdated}
+            alt="the image after conversion"
+            fill
+            style={{ backgroundImage: colorPicker ? `radial-gradient(circle at center, ${colorPicker}af, ${colorPicker})` : 'none' }}
+            className={`object-cover ${rounded ? 'rounded-full' : ''}`}
+          />
+        </div>}
+      </>}
+
+      
+      <button className="m-4 mb-0 outlined border-2 border-blue-300 text-blue rounded" onClick={resetState} >Create More</button>
+      <button className="m-4 bg-blue-500 text-white rounded border-2 border-white" onClick={handleDownload}>Download Image</button>
+
+      <div className='grid grid-cols-12 gap-4 justify-center m-4 mb-20'>
         <div className='col-span-12 sm:col-span-4 text-center mb-2'>
           <p className='font-bold mb-4 text-lg'>Preset Background:</p>
           <div className="flex flex-wrap gap-2 justify-left">
@@ -135,31 +171,7 @@ export default function ColorPallete(props: { dimensions: { width: number; heigh
           </p>}
         </div>
       </div>
-
       <canvas className="hidden" ref={canvasRef}  />
-
-      {imgUpdated.length > 0 && <>
-        <input type='radio' className='m-2 mt-1 w-6 h-6 cursor-pointer align-middle' checked={!rounded} onChange={() => setRounded(false)} />Original Dimensions
-        <input type='radio' className='m-2 mt-1 w-6 h-6 cursor-pointer align-middle' checked={rounded} onChange={() => setRounded(true)} />Rounded Dimensions
-        {bgFile ? <div className='relative mt-4' style={{width: dimensions.width/2, height: rounded ? dimensions.width/2 : dimensions.height/2, margin: '8px auto'}}>
-          <Image
-            src={imgUpdated}
-            alt="the image after conversion"
-            fill
-            style={{ backgroundImage: `url(${bgFile})`, objectFit: 'cover', borderRadius: rounded ? '50%' : '0' }}
-          />
-        </div> : <div className="relative mt-4" style={{width: dimensions.width/2, height: rounded ? dimensions.width/2 : dimensions.height/2, margin: '8px auto'}}  >
-          <Image
-            src={imgUpdated}
-            alt="the image after conversion"
-            fill
-            style={{ backgroundImage: `radial-gradient(circle at center, ${colorPicker}7f, ${colorPicker})` }}
-            className={`object-cover ${rounded ? 'rounded-full' : ''}`}
-          />
-        </div>}
-      </>}
-      <button className="m-4 outlined border-2 border-blue-300 text-blue rounded" onClick={resetState} >Create More</button>
-      <button className="m-4 bg-blue-500 text-white rounded" onClick={handleDownload}>Download Image</button>
     </>
   );
 }
