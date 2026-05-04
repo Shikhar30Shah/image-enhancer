@@ -25,6 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head >
+        <link href="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module" rel="stylesheet" />
+      </head>
       <body
         className={`${raleway.variable} antialiased`}
       >

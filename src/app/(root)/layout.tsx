@@ -1,6 +1,9 @@
-import HelpComponent from "@/components/HelpComponent";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
+import { ToastContainer } from "react-toastify/unstyled";
+
+const HelpComponent = dynamic(() => import("@/components/HelpComponent"));
 
 export default function Layout({
   children,

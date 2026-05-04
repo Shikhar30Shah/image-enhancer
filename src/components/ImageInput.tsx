@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import Convert from "@/app/(root)/convert/page";
+import Convert from "@/components/Convert";
+import { toast, ToastContainer } from "react-toastify";
 
 type dimensions = {
-    width: number,
-    height: number
+  width: number,
+  height: number
 }
 const ImageInput = () => {
   const [file, setFile] = useState<File | null>();
@@ -24,7 +24,7 @@ const ImageInput = () => {
       fr.onload = () => {
         const img = new window.Image();
         img.onload = () => {
-            setDimensions({width: img.width, height: img.height});
+          setDimensions({ width: img.width, height: img.height });
         }
         img.src = fr.result as string;
       }
@@ -34,30 +34,34 @@ const ImageInput = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-        if(showProgress) {
-            setProgress((prev) => {
-                if (imgUpdated.length > 0) {
-                  clearInterval(interval);
-                  setShowProgress(false);
-                  return 100;
-                }
-                if(prev>=95) return prev;
-                return prev + 1;
-            });
-        }
+      if (showProgress) {
+        setProgress((prev) => {
+          if (imgUpdated.length > 0) {
+            clearInterval(interval);
+            setShowProgress(false);
+            return 100;
+          }
+          if (prev >= 95) return prev;
+          return prev + 1;
+        });
+      }
     }, 1000);
 
     return () => clearInterval(interval);
   }, [imgUpdated, progress])
 
   const handleSubmit = async () => {
-    if (!file) return;
-    
+    if (!file) {
+      console.log("No file selected");
+      toast("Please select a file to convert.");
+      return;
+    }
+
     setShowProgress(true);
     setConvert(true);
     setProgress(1);
 
-    const worker = new Worker(new URL("../../public/sw.js", import.meta.url), {type : "module"});
+    const worker = new Worker(new URL("../../public/sw.js", import.meta.url), { type: "module" });
 
     worker.onmessage = (event) => {
       const { success, blob, error } = event.data;
@@ -95,12 +99,39 @@ const ImageInput = () => {
 
   return (
     !convert ? <>
-      <p className="text-center mt-15 xs:mt-10 sm:mt-10 md:mt-20">Easily create stunning profile pictures with our background removal tool. </p>
-      <p className="text-center mb-6">
-        Customize background with our color palette or upload your own background image.</p>
-      <div className="file-input">
-        <UploadCloudIcon />
-        <label className="text-center" htmlFor="file_id">Upload or Drag and drop an image file here</label>
+      <ToastContainer 
+        position="bottom-left" 
+        autoClose={3000} 
+        theme='dark' 
+        limit={1} 
+        hideProgressBar
+        closeOnClick
+        pauseOnHover
+        className="toast-container"
+        toastClassName={() => "toast-message"}
+        closeButton={({ closeToast }) => (
+          <button 
+            onClick={closeToast}
+            className="toast-close-btn"
+            aria-label="Close notification"
+          >
+            ✕
+          </button>
+        )}
+      />
+      <p className="text-center mt-2 xs:mt-2 sm:mt-2 md:mt-4 animate-fade-in-up delay-200 relative z-10">
+        Easily create stunning profile pictures with our background removal tool.
+      </p>
+      <p className="text-center mb-6 animate-fade-in-up delay-300 relative z-10">
+        Customize background with our color palette or upload your own background image.
+      </p>
+      <div className="file-input relative overflow-hidden group"
+        style={{ animation: 'fade-in-up 0.8s ease-out 0.5s forwards, glow-pulse 3s ease-in-out 1.3s infinite', opacity: 0 }}>
+        {/* Animated background gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+
+        <UploadCloudIcon className="animate-bounce-slow" />
+        <label className="text-center mt-2" htmlFor="file_id">Upload or Drag and drop an image file here</label>
         <input
           name="file"
           id="file_id"
@@ -113,14 +144,14 @@ const ImageInput = () => {
         />
       </div>
 
-      {file && <span className="flex justify-center items-center text-white">
-        <FileIcon className="mr-1 mt-1" color="white" fontWeight={600} width={18} height={18} /> {file.name} 
-        <XIcon onClick={handleRemoveFile} className="ml-2 mt-1 cursor-pointer" width={18} height={18} />
+      {file && <span className="flex justify-center items-center text-white animate-fade-in-up delay-100">
+        <FileIcon className="mr-1 mt-1" color="white" fontWeight={600} width={18} height={18} /> {file.name}
+        <XIcon onClick={handleRemoveFile} className="ml-2 mt-1 cursor-pointer hover:text-red-400 transition-colors" width={18} height={18} />
       </span>}
 
-      <button className="m-4 bg-blue-500 text-white shadow-lg border-2 border-white rounded hover:bg-blue-600" onClick={handleSubmit}>Convert</button>
+      <button className="m-4 bg-blue-500 text-white shadow-lg border-2 border-white rounded hover:bg-blue-600 hover:scale-105 hover:shadow-[0_0_20px_rgba(29,161,242,0.5)] transition-all duration-300 " onClick={handleSubmit}>Convert</button>
     </> : <>
-        <Convert progress={progress} resetState={resetState} imgUpdated={imgUpdated} dimensions={dimensions} />
+      <Convert progress={progress} resetState={resetState} imgUpdated={imgUpdated} dimensions={dimensions} />
     </>
   );
 };
